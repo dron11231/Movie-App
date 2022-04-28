@@ -1,0 +1,21 @@
+footer {
+    display: flex;
+    justify-content: center;
+    margin-top: 3rem;
+}
+
+.ant-pagination-item {
+    border-radius: 5px !important;
+}
+
+.ant-pagination-item-active {
+    background-color: #1890FF !important;
+}
+
+.ant-pagination-item-active a {
+    color: white !important;
+}
+
+.ant-pagination-item-link {
+    border: none !important;
+}
