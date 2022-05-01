@@ -1,0 +1,14 @@
+.ant-spin {
+    display: flex !important;
+    justify-content: center;
+    margin-top: 1rem !important;
+}
+
+.ant-alert-warning {
+    margin-top: 15px !important;
+}
+
+.container {
+    width: 90%;
+    margin: 0 auto;
+}

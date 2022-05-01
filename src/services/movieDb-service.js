@@ -1,16 +1,20 @@
-import errorImg from '../images/img-error.jpg';
+import errorImg from './img-error.jpg';
 
 export default class MovieDbService {
-  async getMovies(query) {
+  query = null;
+  page = null;
+
+  async getMovies(query, page) {
+    this.query = query;
+    this.page = page;
     const res = await fetch(
-      'https://api.themoviedb.org/3/search/movie?api_key=015c61e2d3e437ff4bf8ef4893d9f416&query=return'
+      `https://api.themoviedb.org/3/search/movie?api_key=015c61e2d3e437ff4bf8ef4893d9f416&query=${this.query}&page=${this.page}`
     );
     const jsonRes = await res.json();
-    return jsonRes.results;
+    return jsonRes;
   }
 
-  async getPoster(id) {
-    const movies = await this.getMovies();
+  async getPoster(id, movies) {
     let posterUrl;
     movies.forEach((movie) => {
       if (movie.id === id) {

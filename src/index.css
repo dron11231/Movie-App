@@ -1,11 +1,12 @@
 body {
     background-color: #F7F7F7;
+    font-family: 'Inter', 'sans-serif';
 }
 
 #root {
     width: 90%;
     margin: 0 auto;
-    padding-top: 2rem;
+    
     padding-bottom: 3rem;
     background-color: white;
 }
