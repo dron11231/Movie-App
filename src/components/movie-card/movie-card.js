@@ -29,11 +29,11 @@ export default class MovieCard extends React.Component {
     return ShortOverview;
   };
 
-  componentDidUpdate() {
+  /* componentDidUpdate() {
     if (this.state.rate) {
       localStorage.setItem(this.props.movie.id, JSON.stringify(this.props.movie));
     }
-  }
+  } */
 
   componentDidMount() {
     if (this.props.movie.userRate) {
@@ -96,7 +96,20 @@ export default class MovieCard extends React.Component {
   }
 }
 
-function Movie({ urlPicture, name, rating, finalDate, cutHandler, userRate, id, ratingColor, movie, rate, setRate }) {
+function Movie({
+  urlPicture,
+  name,
+  rating,
+  finalDate,
+  cutHandler,
+  userRate,
+  id,
+  ratingColor,
+  movie,
+  rate,
+  setRate,
+  onRate,
+}) {
   return (
     <div className="movies__card movie-card">
       <img src={urlPicture} />

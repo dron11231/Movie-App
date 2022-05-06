@@ -15,6 +15,7 @@ import 'antd/dist/antd.css';
 export default class App extends React.Component {
   state = {
     movies: [],
+    ratedMovies: [],
     genreList: [],
     query: null,
     loading: false,
@@ -28,12 +29,48 @@ export default class App extends React.Component {
   };
 
   rate = (id, value) => {
-    const newArr = [...this.state.movies];
-    const idx = newArr.findIndex((el) => el.id === id);
-    newArr[idx].userRate = value;
-    this.setState({
-      movies: newArr,
-    });
+    if (localStorage[id] !== undefined) {
+      let movie = JSON.parse(localStorage[id]);
+      movie.userRate = value;
+      movie = JSON.stringify(movie);
+      localStorage.setItem(id, movie);
+    } else {
+      const newArr = [...this.state.movies];
+      const idx = newArr.findIndex((el) => el.id === id);
+      newArr[idx].userRate = value;
+      let newItem = JSON.stringify(newArr[idx]);
+      localStorage.setItem(id, newItem);
+    }
+    if (this.state.tabRated) {
+      const newArr = [...this.state.ratedMovies];
+      const idx = newArr.findIndex((el) => el.id === id);
+      newArr[idx].userRate = value;
+      this.setState({
+        ratedMovies: newArr,
+      });
+    } else {
+      const ratedMoviesArr = [];
+      const newArr = [...this.state.movies];
+      const idx = newArr.findIndex((el) => el.id === id);
+      newArr[idx].userRate = value;
+      for (let i = 0; i < localStorage.length; i++) {
+        let item = JSON.parse(localStorage.getItem(localStorage.key(i)));
+        if (ratedMoviesArr[i] !== undefined) {
+          if (ratedMoviesArr[i].id !== item.id) {
+            ratedMoviesArr.push(item);
+          } else {
+            ratedMoviesArr[i].userRate = item.userRate;
+          }
+        } else {
+          ratedMoviesArr.push(item);
+        }
+      }
+
+      this.setState({
+        movies: newArr,
+        ratedMovies: ratedMoviesArr,
+      });
+    }
   };
 
   toggleTab = (rated) => {
@@ -73,6 +110,14 @@ export default class App extends React.Component {
 
   componentDidMount() {
     window.addEventListener('resize', this.resizeHandler);
+    const newArr = [];
+    for (let i = 0; i < localStorage.length; i++) {
+      let item = JSON.parse(localStorage.getItem(localStorage.key(i)));
+      newArr.push(item);
+    }
+    this.setState({
+      ratedMovies: newArr,
+    });
   }
 
   componentWillUnmount() {
@@ -177,7 +222,12 @@ export default class App extends React.Component {
     const mainContent = loading ? (
       <Spin size="large" />
     ) : (
-      <Movies movies={this.state.movies} rate={this.rate} tabRated={this.state.tabRated} />
+      <Movies
+        movies={this.state.movies}
+        ratedMovies={this.state.ratedMovies}
+        rate={this.rate}
+        tabRated={this.state.tabRated}
+      />
     );
     const warningMessage = warning ? <WarningMessage notFound={this.state.notFound} /> : null;
     return (
