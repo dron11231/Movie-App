@@ -3,7 +3,7 @@ import { Pagination } from 'antd';
 
 import './footer.css';
 
-const Footer = ({ moviesCount, searchMovies, query, totalPages }) => {
+const Footer = ({ moviesCount, searchMovies, query, totalPages, tabRated }) => {
   const pages = Number(totalPages + '0');
   const content =
     moviesCount === 0 ? (
@@ -16,7 +16,9 @@ const Footer = ({ moviesCount, searchMovies, query, totalPages }) => {
         }}
       />
     );
-  return <footer>{content}</footer>;
+  if (tabRated) {
+    return null;
+  } else return <footer>{content}</footer>;
 };
 
 export default Footer;

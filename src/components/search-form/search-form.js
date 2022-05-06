@@ -32,8 +32,11 @@ function Input({ text, onToggleInput, searchMovies }) {
       placeholder="Type to search..."
       value={text}
       onChange={(e) => {
+        if (e.target.value.charAt(0) === ' ') {
+          e.target.value = '';
+        }
         onToggleInput(e);
-        debounced(text);
+        debounced(e.target.value);
       }}
     />
   );

@@ -28,7 +28,13 @@ export default class MovieDbService {
     return posterUrl;
   }
 
-  async getGenres(ids) {
+  async getGenreList() {
+    const res = await fetch('https://api.themoviedb.org/3/genre/movie/list?api_key=015c61e2d3e437ff4bf8ef4893d9f416');
+    const jsonRes = await res.json();
+    return jsonRes;
+  }
+
+  /* async getGenres(ids) {
     const res = await fetch('https://api.themoviedb.org/3/genre/movie/list?api_key=015c61e2d3e437ff4bf8ef4893d9f416');
     const jsonRes = await res.json();
     let genres = [];
@@ -40,18 +46,5 @@ export default class MovieDbService {
       });
     });
     return genres;
-  }
+  } */
 }
-
-/* async getGenre(id) {
-    const res = await fetch('https://api.themoviedb.org/3/genre/movie/list?api_key=015c61e2d3e437ff4bf8ef4893d9f416');
-    const jsonRes = await res.json();
-    let genres = [];
-    jsonRes.genres.forEach((genre) => {
-      if (genre.id === id) {
-        genres.push(genre.name);
-      }
-    });
-    return genres;
-  }
- */
